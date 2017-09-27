@@ -73,6 +73,16 @@ public class PersonValidator : Validator<Person>
 var result = _personValidator.IsValid(person);
 ```
 
+#### 5- Get all broken specifications
+
+```
+foreach(var item in _personValidator.InvalidRules)
+{
+    //item correspond to SpecificationErrorAttribute value defined on specification file
+    Console.WriteLine(item);
+}
+```
+
 ## Customize the validation
 
 #### You can filter which specifications you want to use in some cases

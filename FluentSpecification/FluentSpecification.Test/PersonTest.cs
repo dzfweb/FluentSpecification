@@ -5,6 +5,7 @@ using FluentSpecification.Test.Validatons;
 using FluentSpecification.Test.Validators;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 
 namespace FluentSpecification.Test
@@ -108,6 +109,11 @@ namespace FluentSpecification.Test
                 .AddParameter("MyFirstName", "Douglas")
                 .AddParameter("MyLastName", "Franco")
                 .IsValid(person);
+
+            foreach(var item in _personValidator.InvalidRules)
+            {
+                Console.WriteLine(item);
+            }
 
             //then
             Assert.IsFalse(result);
