@@ -9,6 +9,16 @@ A small validation library for .NET that uses a fluent interface for building va
 - Easy to understand all business validation, once is more readable than a lot of "ifs" in one same code block;
 - Easy to refactoring, once you can refactor only the one specification without interfere the others;
 
+
+## Instalation
+
+### Package Manager
+`Install-Package DzfWeb.FluentSpecification`
+
+### .NET CLI
+`dotnet add package DzfWeb.FluentSpecification`
+
+
 ## Usage
 
 
