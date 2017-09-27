@@ -9,6 +9,6 @@ namespace FluentSpecification.Test.Specifications
     public class PersonEmailSpecification : Specification<Person>
     {
         public override bool IsSatisfiedBy(Person entity) =>
-            new EmailAddressAttribute().IsValid(entity.Email);
+            !string.IsNullOrEmpty(entity.Email) && new EmailAddressAttribute().IsValid(entity.Email);
     }
 }
