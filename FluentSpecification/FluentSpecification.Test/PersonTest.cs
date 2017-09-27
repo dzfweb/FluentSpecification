@@ -1,4 +1,5 @@
-﻿using FluentSpecification.Test.Models;
+﻿using FluentSpecification.Extensions;
+using FluentSpecification.Test.Models;
 using FluentSpecification.Test.Specifications;
 using FluentSpecification.Test.Validatons;
 using FluentSpecification.Test.Validators;
@@ -13,9 +14,8 @@ namespace FluentSpecification.Test
     {
         private PersonValidator _personValidator;
         private UnityContainer _container = new UnityContainer();
-        
-        [TestInitialize]
 
+        [TestInitialize]
         public void Config()
         {
             _container.RegisterType<Validator<Person>, PersonValidator>();
@@ -61,6 +61,53 @@ namespace FluentSpecification.Test
 
             //when
             var result = _personValidator.IsValid(person);
+
+            //then
+            Assert.IsFalse(result);
+            Assert.AreEqual(_personValidator.InvalidRules.Count, 2);
+            Assert.IsNotNull(_personValidator.InvalidRules.FirstOrDefault(x => (PersonValidation)x == PersonValidation.InvalidName));
+            Assert.IsNotNull(_personValidator.InvalidRules.FirstOrDefault(x => (PersonValidation)x == PersonValidation.InvalidEmail));
+        }
+
+        [TestMethod]
+        /// Use when you want to filter specified rule in a validator
+        public void CanAcceptPersonWithInvalidEmail()
+        {
+            //given
+            var person = new Person()
+            {
+                FirstName = "Douglas",
+                LastName = "Franco",
+                Email = "invalid@email"
+            };
+
+            //when
+            var result = _personValidator
+                .FilterRules(typeof(PersonNameSpecification))
+                .IsValid(person);
+
+            //then
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        /// Use when you want to add some parameters to specification
+        public void CannotAcceptPersonWithMyNameAndMyEmail()
+        {
+            //given
+            var person = new Person()
+            {
+                FirstName = "Douglas",
+                LastName = "Franco",
+                Email = "douglas.franco@dzfweb.com.br"
+            };
+
+            //when
+            var result = _personValidator
+                .AddParameter("MyEmail", "douglas.franco@dzfweb.com.br")
+                .AddParameter("MyFirstName", "Douglas")
+                .AddParameter("MyLastName", "Franco")
+                .IsValid(person);
 
             //then
             Assert.IsFalse(result);

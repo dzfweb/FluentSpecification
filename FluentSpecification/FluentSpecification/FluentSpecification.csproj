@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Attributes\SpecificationErrorAttribute.cs" />
     <Compile Include="Attributes\SpecificationSortAttribute.cs" />
+    <Compile Include="Extensions\DictionaryExtension.cs" />
     <Compile Include="Extensions\EspecificationExtension.cs" />
     <Compile Include="Extensions\ValidatorExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
