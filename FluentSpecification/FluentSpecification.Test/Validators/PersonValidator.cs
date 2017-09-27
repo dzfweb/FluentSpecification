@@ -11,7 +11,5 @@ namespace FluentSpecification.Test.Validators
                 personEmailSpecification)
         {
         }
-
-        public object FilterRules { get; internal set; }
     }
 }
