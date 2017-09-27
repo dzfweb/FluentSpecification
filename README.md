@@ -60,3 +60,7 @@ public class PersonValidator : Validator<Person>
 ```
 var result = _personValidator.IsValid(person);
 ```
+
+## Samples
+For more samples, visit:
+https://github.com/dzfweb/FluentSpecification/blob/master/FluentSpecification/FluentSpecification.Test/PersonTest.cs
