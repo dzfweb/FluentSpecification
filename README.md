@@ -73,6 +73,38 @@ public class PersonValidator : Validator<Person>
 var result = _personValidator.IsValid(person);
 ```
 
+## Customize the validation
+
+#### You can filter which specifications you want to use in some cases
+```
+var isValidToSendEmail = _personValidator
+                        .FilterRules(typeof(PersonEmailSpecification))
+                        .IsValid(person);
+
+```
+
+#### You can add parameters to be used during the validation
+```
+var isValidToCreate = _personValidator
+                .AddParameter("RestrictedEmail", "douglas.franco@dzfweb.com.br")
+                .IsValid(person);
+```
+
+```
+[SpecificationError(PersonValidation.InvalidEmail)]
+public class PersonEmailSpecification : Specification<Person>
+{
+    public override bool IsSatisfiedBy(Person entity) =>
+        !string.IsNullOrEmpty(entity.Email) && 
+        new EmailAddressAttribute().IsValid(entity.Email) &&
+        entity.Email != (string)Parameters.GetValueOrDefault("RestrictedEmail", "");
+}
+```
+
+
+
+
+
 ## Samples
 For more samples, visit:
 https://github.com/dzfweb/FluentSpecification/blob/master/FluentSpecification/FluentSpecification.Test/PersonTest.cs
